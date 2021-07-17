@@ -35,6 +35,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("net.javacrumbs.shedlock:shedlock-spring:4.25.0")
     implementation("net.javacrumbs.shedlock:shedlock-provider-redis-spring:4.25.0")
+    implementation("org.springdoc:springdoc-openapi-ui:1.5.9")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
