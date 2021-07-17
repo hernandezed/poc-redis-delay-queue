@@ -1,0 +1,19 @@
+spring:
+  redis:
+    host: localhost
+    port: 7000
+  datasource:
+    url: jdbc:mariadb://localhost:3306/test
+    username: test
+    password: test
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+server:
+  port: 5600
+  servlet:
+    context-path: /redis-delay
+logging:
+  level:
+    org: debug
