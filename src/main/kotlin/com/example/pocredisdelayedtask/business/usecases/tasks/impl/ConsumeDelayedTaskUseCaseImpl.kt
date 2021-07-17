@@ -15,7 +15,7 @@ class ConsumeDelayedTaskUseCaseImpl(private val delayedTaskQueue: DelayedQueue<D
     @Scheduled(fixedDelay = 10000)
     @SchedulerLock(name = "delayTaskLock")
     override fun execute() {
-        val task = TaskBO.fromDelayedTask(delayedTaskQueue.first)
+        val task = TaskBO.fromDelayedTask(delayedTaskQueue.poll())
         task?.let {
             it.process()
             taskRepository.save(it.toTask())

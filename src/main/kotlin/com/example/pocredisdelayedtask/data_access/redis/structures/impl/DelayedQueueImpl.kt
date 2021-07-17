@@ -11,16 +11,15 @@ class DelayedQueueImpl<T>(val redisTemplate: RedisTemplate<String, T>, private v
         redisTemplate.opsForZSet().add(queueName, delayedTask, LocalDateTime.now().plus(delayMillis, ChronoUnit.MILLIS).toEpochSecond(ZoneOffset.UTC).toDouble() * 0.0000000001)
     }
 
-    override val first: T?
-        get() {
-            val iter: Iterator<T?> = redisTemplate.opsForZSet().reverseRangeByScore(queueName,
-                    Long.MIN_VALUE.toDouble(), LocalDateTime.now().toEpochSecond(ZoneOffset.UTC).toDouble() * 0.0000000001, 0,
-                    1)!!.iterator()
-            return if (iter.hasNext()) {
-                var value = iter.next()
-                redisTemplate.opsForZSet().remove(queueName, value)
-                value
-            } else null
-        }
+    override fun poll(): T? {
+        val iter: Iterator<T?> = redisTemplate.opsForZSet().reverseRangeByScore(queueName,
+                Long.MIN_VALUE.toDouble(), LocalDateTime.now().toEpochSecond(ZoneOffset.UTC).toDouble() * 0.0000000001, 0,
+                1)!!.iterator()
+        return if (iter.hasNext()) {
+            var value = iter.next()
+            redisTemplate.opsForZSet().remove(queueName, value)
+            value
+        } else null
+    }
 }
 
